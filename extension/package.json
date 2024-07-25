@@ -6,7 +6,7 @@
   "scripts": {
     "build:contentScript": "bun build src/entrypoints/contentScript.ts --outfile dist/contentScript.js",
     "build:serviceWorker": "bun build src/entrypoints/serviceWorker.ts --outfile dist/serviceWorker.js",
-    "build": "rm -rf dist; mkdir dist; cp manifest.json dist; cp -r assets dist; npm run build:contentScript; npm run build:serviceWorker"
+    "build": "rm -rf dist; mkdir dist; cp manifest.json dist; cp -r assets dist; npm run build:contentScript; npm run build:serviceWorker; bun run build.ts"
   },
   "author": "",
   "license": "ISC",

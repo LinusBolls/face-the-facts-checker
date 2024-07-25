@@ -1,8 +1,9 @@
 import { env } from "./env";
+import { t } from "./i18n";
 
 export function FactCard(id: string, text: string) {
   return `<div
-    aria-label="Context to the current video section, brought to you by Face the Facts"
+    aria-label="${t("fact_ariaDescription")}"
     data-facts-fact="${id}"
     class="facts-fact"
   >
@@ -33,9 +34,11 @@ export function FactCard(id: string, text: string) {
             white-space: nowrap;
           "
         >
-          AI added context
+          ${t("fact_aiCaption")}
         </h2>
-        <button aria-label="Close fact" class="facts-icon-button" data-facts-action="close" style="margin-left: auto">
+        <button aria-label="${t(
+          "fact_ariaCloseButton"
+        )}" class="facts-icon-button" data-facts-action="close" style="margin-left: auto">
       <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M7.85175 7.49935L11.0834 10.731V11.5827H10.2317L7.00008 8.35102L3.76841 11.5827H2.91675V10.731L6.14841 7.49935L2.91675 4.26768V3.41602H3.76841L7.00008 6.64768L10.2317 3.41602H11.0834V4.26768L7.85175 7.49935Z" fill="#EEEEEE"/>
       </svg>
@@ -54,11 +57,25 @@ export function FactCard(id: string, text: string) {
         color: rgba(255, 255, 255, 0.8);
       ">${text}</p>
     <div style="display: flex; gap: 4px; padding: 2px 12px 8px 12px">
-      <span style="font-size: 11px; line-height: 20px; font-weight: 400; color: #EEEEEE">Is this helpful?</span>
+      <span style="font-size: 11px; line-height: 20px; font-weight: 400; color: #EEEEEE">${t(
+        "fact_isThisHelpful"
+      )}</span>
       <div style="display: flex; gap: 4px">
-        <button aria-label="Rate fact as helpful" class="facts-pill-button" data-facts-action="rate-helpfulness" data-facts-helpfulness="yes">Yes</button>
-        <button aria-label="Rate fact as somewhat helpful" class="facts-pill-button" data-facts-action="rate-helpfulness" data-facts-helpfulness="somewhat">Somewhat</button>
-        <button aria-label="Rate fact as unhelpful" class="facts-pill-button" data-facts-action="rate-helpfulness" data-facts-helpfulness="no">No</button>
+        <button aria-label="${t(
+          "fact_helpfulness_yes_aria"
+        )}" class="facts-pill-button" data-facts-action="rate-helpfulness" data-facts-helpfulness="yes">${t(
+    "fact_helpfulness_yes_label"
+  )}</button>
+        <button aria-label="${t(
+          "fact_helpfulness_somewhat_aria"
+        )}" class="facts-pill-button" data-facts-action="rate-helpfulness" data-facts-helpfulness="somewhat">${t(
+    "fact_helpfulness_somewhat_label"
+  )}</button>
+        <button aria-label="${t(
+          "fact_helpfulness_no_aria"
+        )}" class="facts-pill-button" data-facts-action="rate-helpfulness" data-facts-helpfulness="no">${t(
+    "fact_helpfulness_no_label"
+  )}</button>
       </div>
     </div>
   </div>`;

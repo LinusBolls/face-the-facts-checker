@@ -1,10 +1,11 @@
 {
   "manifest_version": 3,
   "version": "1.0",
-  "name": "Face the Facts",
-  "description": "Get live, ai-based fact checks on your content!",
+  "name": "__MSG_meta_name__",
+  "description": "__MSG_meta_description__",
   "homepage_url": "https://check.facethefacts.app",
   "author": "linus.bolls@gmail.com",
+  "default_locale": "en",
   "content_scripts": [
     {
       "js": ["contentScript.js"],
