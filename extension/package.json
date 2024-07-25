@@ -1,0 +1,20 @@
+{
+  "name": "youtube-fact-check",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:contentScript": "bun build src/entrypoints/contentScript.ts --outfile dist/contentScript.js",
+    "build:serviceWorker": "bun build src/entrypoints/serviceWorker.ts --outfile dist/serviceWorker.js",
+    "build": "rm -rf dist; mkdir dist; cp manifest.json dist; cp -r assets dist; npm run build:contentScript; npm run build:serviceWorker"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "openai": "^4.52.7",
+    "youtube-transcript": "^1.2.1"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.269"
+  }
+}
