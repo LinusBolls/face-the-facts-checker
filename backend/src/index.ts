@@ -12,7 +12,7 @@ async function main() {
   await fastify.register(routes, { prefix: "/api/v1" });
 
   fastify.get("/f/:factId", (request, reply) => {
-    const factId = (request.params as any).videoId;
+    const factId = (request.params as any).factId;
 
     reply.type("text/html").send(`<!DOCTYPE html>
 <html lang="en">
@@ -22,7 +22,8 @@ async function main() {
     <title>Document</title>
   </head>
   <body>
-    ${factId}
+  <h1>${factId}</h1>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/x0uiD362T48?si=tghb2ZEAsOZPyKaw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </body>
 </html>`);
   });

@@ -24,6 +24,11 @@ const assertEnvInteger = (name: string) => {
 export const env = {
   port: assertEnvInteger("PORT"),
   publicUrl: assertEnvString("PUBLIC_SERVICE_URL"),
+  auth: {
+    token: {
+      secret: assertEnvString("TOKEN_SECRET"),
+    },
+  },
   openai: {
     apiKey: assertEnvString("OPENAI_API_KEY"),
   },
