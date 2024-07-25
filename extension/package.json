@@ -6,11 +6,13 @@
   "scripts": {
     "build:contentScript": "bun build src/entrypoints/contentScript.ts --outfile dist/contentScript.js",
     "build:serviceWorker": "bun build src/entrypoints/serviceWorker.ts --outfile dist/serviceWorker.js",
-    "build": "rm -rf dist; mkdir dist; cp manifest.json dist; cp -r assets dist; npm run build:contentScript; npm run build:serviceWorker; bun run build.ts"
+    "build": "rm -rf dist; mkdir dist; cp manifest.json dist; cp -r assets dist; bun run build.ts; npm run build:contentScript; npm run build:serviceWorker"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/markdown-it": "^14.1.2",
+    "markdown-it": "^14.1.0",
     "openai": "^4.52.7",
     "youtube-transcript": "^1.2.1"
   },

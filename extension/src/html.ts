@@ -1,7 +1,55 @@
+import { RenderRule } from "markdown-it/lib/renderer.mjs";
 import { env } from "./env";
 import { t } from "./i18n";
 
-export function FactCard(id: string, text: string) {
+import MarkdownIt from "markdown-it";
+
+export const copyIcon = `<svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M11.0833 12.75H4.66666V4.58333H11.0833M11.0833 3.41667H4.66666C4.35724 3.41667 4.06049 3.53958 3.8417 3.75838C3.62291 3.97717 3.49999 4.27391 3.49999 4.58333V12.75C3.49999 13.0594 3.62291 13.3562 3.8417 13.575C4.06049 13.7938 4.35724 13.9167 4.66666 13.9167H11.0833C11.3927 13.9167 11.6895 13.7938 11.9083 13.575C12.1271 13.3562 12.25 13.0594 12.25 12.75V4.58333C12.25 4.27391 12.1271 3.97717 11.9083 3.75838C11.6895 3.53958 11.3927 3.41667 11.0833 3.41667ZM9.33332 1.08333H2.33332C2.0239 1.08333 1.72716 1.20625 1.50837 1.42504C1.28957 1.64384 1.16666 1.94058 1.16666 2.25V10.4167H2.33332V2.25H9.33332V1.08333Z" fill="#EEEEEE"/>
+</svg>`;
+
+export const copySuccessIcon = `<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6.21253 12.2842L2.59003 8.66167L4.24086 7.01083L6.21253 8.98833L11.9759 3.21917L13.6267 4.87L6.21253 12.2842Z" fill="white"/>
+</svg>`;
+
+export const closeIcon = `<svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M7.85175 7.49935L11.0834 10.731V11.5827H10.2317L7.00008 8.35102L3.76841 11.5827H2.91675V10.731L6.14841 7.49935L2.91675 4.26768V3.41602H3.76841L7.00008 6.64768L10.2317 3.41602H11.0834V4.26768L7.85175 7.49935Z" fill="#EEEEEE"/>
+</svg>`;
+
+export const openFactIcon = `<svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M9.02018 1.78128V2.94795H11.1143L5.38018 8.68211L6.20268 9.50461L11.9368 3.77045V5.86461H13.1035V1.78128M11.9368 11.1146H3.77018V2.94795H7.85352V1.78128H3.77018C3.12268 1.78128 2.60352 2.30628 2.60352 2.94795V11.1146C2.60352 11.424 2.72643 11.7208 2.94522 11.9396C3.16402 12.1584 3.46076 12.2813 3.77018 12.2813H11.9368C12.2463 12.2813 12.543 12.1584 12.7618 11.9396C12.9806 11.7208 13.1035 11.424 13.1035 11.1146V7.03128H11.9368V11.1146Z" fill="white"/>
+</svg>`;
+
+const md = new MarkdownIt();
+
+md.core.ruler.push("only_links", (state) => {
+  state.tokens = state.tokens
+    .filter((token) => token.type === "inline")
+    .map((token) => {
+      token.children =
+        token.children?.filter(
+          (child) =>
+            child.type === "link_open" ||
+            child.type === "link_close" ||
+            child.type === "text"
+        ) ?? null;
+      return token;
+    });
+});
+
+const renderFunc: RenderRule = (tokens, idx, options, env, self) => {
+  return self.renderToken(tokens, idx, options);
+};
+
+const defaultRender = md.renderer.rules.link_open || renderFunc;
+
+md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
+  tokens[idx].attrPush(["target", "_blank"]);
+
+  return defaultRender(tokens, idx, options, env, self);
+};
+
+export function FactCard(id: string, text: string, shareLink: string) {
   return `<div
     aria-label="${t("fact_ariaDescription")}"
     data-facts-fact="${id}"
@@ -37,25 +85,16 @@ export function FactCard(id: string, text: string) {
           ${t("fact_aiCaption")}
         </h2>
         <button aria-label="${t(
+          "fact_ariaCopyButton"
+        )}" class="facts-icon-button" data-facts-action="copy" style="margin-left: 3px">${copyIcon}</button>
+                <a href="${shareLink}" target="_blank" aria-label="${t(
+    "fact_ariaCopyButton"
+  )}" class="facts-icon-button">${openFactIcon}</a>
+        <button aria-label="${t(
           "fact_ariaCloseButton"
-        )}" class="facts-icon-button" data-facts-action="close" style="margin-left: auto">
-      <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.85175 7.49935L11.0834 10.731V11.5827H10.2317L7.00008 8.35102L3.76841 11.5827H2.91675V10.731L6.14841 7.49935L2.91675 4.26768V3.41602H3.76841L7.00008 6.64768L10.2317 3.41602H11.0834V4.26768L7.85175 7.49935Z" fill="#EEEEEE"/>
-      </svg>
-  </button>
+        )}" class="facts-icon-button" data-facts-action="close" style="margin-left: auto; margin-right: 3px">${closeIcon}</button>
     </div>
-    <p
-      style="
-        padding-left: 8px;
-        padding-right: 8px;
-        padding-bottom: 4px;
-        margin-top: -2px;
-        
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 17px;
-        color: rgba(255, 255, 255, 0.8);
-      ">${text}</p>
+    <p class="facts-fact__body">${md.render(text)}</p>
     <div style="display: flex; gap: 4px; padding: 2px 12px 8px 12px">
       <span style="font-size: 11px; line-height: 20px; font-weight: 400; color: #EEEEEE">${t(
         "fact_isThisHelpful"

@@ -27,3 +27,13 @@ function loadLanguage(langId: string, tree: unknown) {
 for (const [langId, tree] of Object.entries(locales)) {
   loadLanguage(langId, tree);
 }
+
+const cssString = fs.readFileSync(join(__dirname, "src", "styles.css"));
+
+fs.writeFileSync(
+  join(__dirname, "src", "styles.ts"),
+  `export const styles = \`${cssString
+    .toString()
+    .replace(/\n/g, "")
+    .replace(/  /g, "")}\``
+);

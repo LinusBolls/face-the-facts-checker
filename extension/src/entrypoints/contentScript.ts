@@ -2,8 +2,15 @@ import { env } from "../env";
 import { urlEvents } from "../urlEvents";
 import { fetchProxy } from "../chromeCommunication";
 import { copyTextToClipboard } from "../clipboard";
-import { FactCard } from "../html";
-import { loadStyles } from "../styles";
+import { copyIcon, copySuccessIcon, FactCard } from "../html";
+import { styles } from "../styles";
+
+function loadStyles() {
+  document.head.insertAdjacentHTML(
+    "beforeend",
+    `<style data-facts-slot="styles">${styles}</style>`
+  );
+}
 
 function removeAllFactCards(options?: { except?: Fact }) {
   const factsContainer = document.querySelector('[data-facts-slot="facts"]');
@@ -140,7 +147,9 @@ async function tryToUpdate() {
 }
 
 function createFactCard(fact: Fact) {
-  const factCard = createElementFromHTML(FactCard(fact.id, fact.text));
+  const factCard = createElementFromHTML(
+    FactCard(fact.id, fact.text, fact.shareLink)
+  );
 
   factCard
     ?.querySelector('[data-facts-action="close"]')
@@ -161,22 +170,27 @@ function createFactCard(fact: Fact) {
       }
     });
 
-  factCard
-    ?.querySelector('[data-facts-action="copy"]')
-    ?.addEventListener("click", async () => {
-      copyTextToClipboard(fact.shareText);
+  const copyButton = factCard?.querySelector('[data-facts-action="copy"]');
 
-      // TODO: persist button state
-      try {
-        await fetchProxy<{ ok: true; data: { facts: any[] } }>(
-          env.apiUrl +
-            `/youtube-videos/${urlEvents.videoId}/facts/${fact.id}/tracking`,
-          { method: "POST", body: JSON.stringify({ action: "copy" }) }
-        );
-      } catch (err) {
-        logger.error("failed to track fact copy:", err);
-      }
-    });
+  copyButton?.addEventListener("click", async () => {
+    copyTextToClipboard(fact.shareText);
+
+    copyButton!.innerHTML = copySuccessIcon;
+
+    setTimeout(() => {
+      if (copyButton) copyButton.innerHTML = copyIcon;
+    }, 3000);
+
+    try {
+      await fetchProxy<{ ok: true; data: { facts: any[] } }>(
+        env.apiUrl +
+          `/youtube-videos/${urlEvents.videoId}/facts/${fact.id}/tracking`,
+        { method: "POST", body: JSON.stringify({ action: "copy" }) }
+      );
+    } catch (err) {
+      logger.error("failed to track fact copy:", err);
+    }
+  });
 
   const feedbackOptions = Array.from(
     factCard?.querySelectorAll('[data-facts-action="rate-helpfulness"]')
