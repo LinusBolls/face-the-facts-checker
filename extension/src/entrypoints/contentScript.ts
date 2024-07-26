@@ -97,9 +97,7 @@ async function main() {
 }
 main();
 
-async function tryToUpdate() {
-  if (!videoInfo) return;
-
+function getCurrentVideoMilliseconds(): number | null {
   const videoElement = document.querySelector<HTMLVideoElement>(
     "video.html5-main-video"
   );
@@ -109,13 +107,22 @@ async function tryToUpdate() {
         "page is video, but failed to select 'video.html5-main-video'"
       );
     }
-    return;
+    return null;
   }
-
   const currentSeconds = videoElement.currentTime;
 
+  return currentSeconds * 1000;
+}
+
+async function tryToUpdate() {
+  if (!videoInfo) return;
+
+  const currentMs = getCurrentVideoMilliseconds();
+
+  if (currentMs == null) return;
+
   const currentFact = videoInfo.facts.find(
-    (i) => i.startMs / 1000 < currentSeconds && i.endMs / 1000 > currentSeconds
+    (i) => i.startMs < currentMs && i.endMs > currentMs
   );
   const factsContainer = document.querySelector('[data-facts-slot="facts"]')!;
 
