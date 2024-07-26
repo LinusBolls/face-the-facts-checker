@@ -60,9 +60,7 @@ async function initVideoPage(videoId: string) {
     return;
   }
   paidContentOverlay.setAttribute("data-facts-slot", "facts");
-  paidContentOverlay.style.display = "flex";
-  paidContentOverlay.style.flexDirection = "column";
-  paidContentOverlay.style.gap = "12px";
+  paidContentOverlay.classList.add("facts-container");
 
   removeAllFactCards();
 
