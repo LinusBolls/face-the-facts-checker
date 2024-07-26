@@ -1,4 +1,6 @@
 import Fastify from "fastify";
+import path from "path";
+
 import cors from "@fastify/cors";
 
 import { routes } from "./routes";
@@ -7,6 +9,11 @@ import { dummyFactPage } from "./dummyFactPage";
 
 async function main() {
   const fastify = Fastify({ logger: true });
+
+  fastify.register(require("@fastify/static"), {
+    root: path.join(__dirname, "../assets"),
+    prefix: "/assets",
+  });
 
   await fastify.register(cors, { origin: true });
 

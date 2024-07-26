@@ -1,8 +1,34 @@
+const startSeconds = 20;
+const videoId = "x0uiD362T48";
+
+const title = "Fact Check - Elon Musk STUNS Jordan Peterson";
+const firstP = "Fact Check - Elon Musk STUNS Jordan Peterson";
+const secondP = `Musk incorrectly claims that puberty blockers are "actually just
+          sterilization drugs". Puberty blockers have been safely used for
+          decades to treat several conditions and according to The Lancet, while
+          there's some evidence that taking hormones does have the potential to
+          impact fertility, puberty blockers carry no such risk.`;
+
+const thumbnailUrl = "/assets/facts-thumbnail.png";
+
 export const dummyFactPage = `<!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="icon" href="https://facethefacts.app/assets/icon/favicon-32x32.png">
+
+    <meta property="og:title" content="${title}" />
+    <meta property="og:description" content="${secondP}" />
+    <meta property="og:image" content="${thumbnailUrl}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>${title}</title>
+    <meta name="description" content="${firstP}">
+
     <style>
       html,
       body {
@@ -12,9 +38,11 @@ export const dummyFactPage = `<!DOCTYPE html>
         padding: 0;
         margin: 0;
 
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
           Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
           sans-serif;
+
+        background: #181924;
       }
       body {
         display: flex;
@@ -27,8 +55,6 @@ export const dummyFactPage = `<!DOCTYPE html>
 
         height: 90px;
         padding: 0 130px;
-
-        background: #181924;
       }
       .header nav {
         display: flex;
@@ -78,8 +104,6 @@ export const dummyFactPage = `<!DOCTYPE html>
         padding: 0 1rem;
 
         min-height: calc(100vh - 90px - 112px);
-
-        background: #181924;
       }
       .content {
         display: flex;
@@ -92,7 +116,6 @@ export const dummyFactPage = `<!DOCTYPE html>
         text-transform: uppercase;
       }
     </style>
-    <title>Document</title>
   </head>
   <body>
     <header class="header">
@@ -122,14 +145,14 @@ export const dummyFactPage = `<!DOCTYPE html>
 
     <main class="main">
       <div class="content">
-        <h1>Fact Check - Elon Musk STUNS Jordan Peterson</h1>
+        <h1>${title}</h1>
         <span class="text" style="padding-top: 20px; padding-bottom: 16px"
-          >Elon Musk STUNS Jordan Peterson</span
+>${firstP}</span
         >
         <iframe
           width="560"
           height="315"
-          src="https://www.youtube.com/embed/x0uiD362T48?si=tghb2ZEAsOZPyKaw"
+          src="https://www.youtube.com/embed/${videoId}?start=${startSeconds}"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -139,24 +162,24 @@ export const dummyFactPage = `<!DOCTYPE html>
         <p
           class="text"
           style="margin: 0; padding-top: 20px; padding-bottom: 16px"
-        >
-          Musk incorrectly claims that puberty blockers are "actually just
-          sterilization drugs". Puberty blockers have been safely used for
-          decades to treat several conditions and according to The Lancet, while
-          there's some evidence that taking hormones does have the potential to
-          impact fertility, puberty blockers carry no such risk.
-        </p>
+>${secondP}</p>
+        <p
+          class="text"
+          style="margin: 0; padding-top: 20px; padding-bottom: 16px"
+>${secondP}</p>
       </div>
     </main>
 
     <footer class="footer">
       <a
-        href="https://facethefacts.app/"
+        href="https://facethefacts.app"
         style="
           display: flex;
           align-items: center;
           width: fit-content;
           gap: 13.55px;
+
+          text-decoration: none;
         "
         ><svg
           width="41"
@@ -172,11 +195,11 @@ export const dummyFactPage = `<!DOCTYPE html>
         </svg>
         <span class="text">Face The Facts</span>
       </a>
-      <div style="display: flex; flex-direction: column; align-items: end">
+      <div style="display: flex; flex-direction: column; align-items: end; gap: 8px">
         <nav style="height: 28px">
           <svg
-            width="24"
-            height="24"
+            width="21"
+            height="21"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -188,8 +211,8 @@ export const dummyFactPage = `<!DOCTYPE html>
             />
           </svg>
           <svg
-            width="24"
-            height="24"
+            width="21"
+            height="21"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -200,19 +223,7 @@ export const dummyFactPage = `<!DOCTYPE html>
               fill-opacity="0.3"
             />
           </svg>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M22.2857 0H1.70893C0.766071 0 0 0.776786 0 1.73036V22.2696C0 23.2232 0.766071 24 1.70893 24H22.2857C23.2286 24 24 23.2232 24 22.2696V1.73036C24 0.776786 23.2286 0 22.2857 0ZM7.25357 20.5714H3.69643V9.11786H7.25893V20.5714H7.25357ZM5.475 7.55357C4.33393 7.55357 3.4125 6.62679 3.4125 5.49107C3.4125 4.35536 4.33393 3.42857 5.475 3.42857C6.61071 3.42857 7.5375 4.35536 7.5375 5.49107C7.5375 6.63214 6.61607 7.55357 5.475 7.55357ZM20.5875 20.5714H17.0304V15C17.0304 13.6714 17.0036 11.9625 15.1821 11.9625C13.3286 11.9625 13.0446 13.4089 13.0446 14.9036V20.5714H9.4875V9.11786H12.9V10.6821H12.9482C13.425 9.78214 14.5875 8.83393 16.3179 8.83393C19.9179 8.83393 20.5875 11.2071 20.5875 14.2929V20.5714Z"
-              fill="white"
-              fill-opacity="0.3"
-            />
-          </svg>
+          <svg width="21" height="21" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgba(256, 256, 256, 0.3)" d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
         </nav>
         <nav>
           <a href="https://facethefacts.app/about-us" class="text">Über uns</a>
